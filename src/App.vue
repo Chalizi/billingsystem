@@ -27,6 +27,19 @@
               prop="totalprice"
               label="金额">
             </el-table-column>
+            <el-table-column
+              fixed="right"
+              label="操作"
+              width="120">
+              <template slot-scope="scope">
+                <el-button
+                  @click.native.prevent="deleteRow(scope.$index, tableData)"
+                  type="text"
+                  size="small">
+                  移除
+                </el-button>
+              </template>
+            </el-table-column>
           </el-table>
         </el-row>
       </div>
@@ -39,7 +52,7 @@
             <el-cascader
               clearable
               filterable
-              placeholder="试试搜索：指南"
+              placeholder="试试搜索：打火机"
               v-model="records"
               @change="choiceRecords(records)"
               :options="options"
@@ -63,17 +76,10 @@
             <div>{{priceName}}</div>
           </el-col>
           <el-col :span="4">
-            <el-input
-              v-if="priceBol"
-              placeholder="请输入内容"
-              v-model="price"
-              clearable
-            ></el-input>
             <el-autocomplete
-              v-else
               v-model="price"
               :fetch-suggestions="querySearch"
-              placeholder="请输入内容"
+              placeholder="请输入金额"
               clearable
             ></el-autocomplete>
           </el-col>
@@ -109,18 +115,10 @@ export default {
       numDisabled: false,
       priceName: '单价',
       records: '',
-      priceBol: true,
       num: 1,
       price: '',
       menus: menus,
-      tableData: [
-        {
-          records: '口味王',
-          num: 1,
-          price: 20,
-          totalprice: 20
-        }
-      ],
+      tableData: [],
       options: options
     }
   },
@@ -136,12 +134,23 @@ export default {
         })
         return
       }
-      console.log(this.menus)
-      console.log(this.records)
-      var records = this.menus[this.records].label
-      var num = this.num
-      var price = this.menus[this.records].price
-      var totalprice = num * price
+      if (typeof parseFloat(this.price) === 'number' && isNaN(parseFloat(this.price))) {
+        this.$message({
+          message: '请先添加金额',
+          type: 'warning'
+        })
+        return
+      }
+      var records, num, price, totalprice
+      if (this.menus[this.records].serializable) {
+        num = 1
+        totalprice = price = this.price
+      } else {
+        num = this.num
+        price = this.menus[this.records].price
+        totalprice = num * price
+      }
+      records = this.menus[this.records].label
       this.tableData.push({
         records: records,
         num: num,
@@ -155,30 +164,27 @@ export default {
     },
     choiceRecords (records) {
       if (!records) return
-      if (records === 'chongzhi' || records === 'taoxian') {
-        this.num = 1
+      if (this.menus[records].serializable) {
+        this.num = '-'
         this.priceName = '金额'
         this.numDisabled = true
-        this.priceBol = false
-      } else if (records === null) {
-        this.price = ''
+      }
+      if (typeof parseFloat(this.menus[records].price) === 'number' && !isNaN(parseFloat(this.menus[records].price))) {
         this.num = 1
-        this.priceName = '单价'
-        this.numDisabled = false
-        this.priceBol = false
-      } else {
-        console.log(records)
         this.price = this.menus[records].price
         this.priceName = '单价'
         this.numDisabled = false
-        this.priceBol = true
       }
     },
     querySearch (queryString, cb) {
       var restaurants = this.restaurants
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
-      // 调用 callback 返回建议列表的数据
       cb(results)
+    },
+    createFilter (queryString) {
+      return (restaurant) => {
+        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+      }
     },
     loadAll () {
       return [
@@ -192,6 +198,9 @@ export default {
         { 'value': '400' },
         { 'value': '500' }
       ]
+    },
+    deleteRow (index, rows) {
+      rows.splice(index, 1)
     }
   },
   mounted () {

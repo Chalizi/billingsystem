@@ -104,5 +104,9 @@ export default [
   {
     value: 'chongzhi',
     label: '充值'
+  },
+  {
+    value: 'taoxian',
+    label: '套现'
   }
 ]

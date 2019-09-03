@@ -116,17 +116,17 @@ export default {
       window.print()
     },
     add () {
-      var records = this.records
-      var num = this.num
-      var price = this.price
-      var totalprice = num * price
-      if (!records) {
+      if (!this.records) {
         this.$message({
           message: '请先添加记录',
           type: 'warning'
         })
         return
       }
+      var records = this.menus[this.records].label
+      var num = this.num
+      var price = this.menus[this.records].price
+      var totalprice = num * price
       this.tableData.push({
         records: records,
         num: num,
@@ -139,7 +139,8 @@ export default {
       })
     },
     choiceRecords (records) {
-      console.log(records)
+      if (!records) return
+      this.price = this.menus[records].price
       if (records === '充值') {
         this.num = 1
         this.priceName = '金额'

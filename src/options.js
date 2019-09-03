@@ -1,86 +1,108 @@
 export default [
   {
-    value: '饮品',
+    value: 'yinpin',
     label: '饮品',
     children: [
       {
-        value: '奶茶',
-        label: '奶茶'
+        value: 'naicha',
+        label: '奶茶',
+        children: [
+          {
+            value: 'bobanaicha',
+            label: '波霸奶茶',
+            price: 10
+          },
+          {
+            value: 'jinjuningmeng',
+            label: '金桔柠檬',
+            price: 10
+          }
+        ]
       }
     ]
   },
   {
-    value: '主食',
+    value: 'zhushi',
     label: '主食',
     children: [
       {
-        value: '盖浇饭',
+        value: 'gaijiaofan',
         label: '盖浇饭',
         children: [
           {
-            value: '豆角茄子',
-            label: '豆角茄子'
+            value: 'doujiaoqiezi',
+            label: '豆角茄子',
+            price: 12
           },
           {
-            value: '万载剁肉',
-            label: '万载剁肉'
+            value: 'wanzaiduorou',
+            label: '万载剁肉',
+            price: 15
           },
           {
-            value: '小炒鸡蛋',
-            label: '小炒鸡蛋'
+            value: 'xiaochaojidan',
+            label: '小炒鸡蛋',
+            price: 12
           }
         ]
       },
       {
-        value: '排骨',
+        value: 'dangu',
         label: '排骨',
         children: [
           {
-            value: '麻辣翅中',
-            label: '麻辣翅中'
+            value: 'malachizhong',
+            label: '麻辣翅中',
+            price: 11
           },
           {
-            value: '香辣排骨',
-            label: '香辣排骨'
+            value: 'xianglapaigu',
+            label: '香辣排骨',
+            price: 15
           },
           {
-            value: '绝味鸭脖',
-            label: '绝味鸭脖'
+            value: 'jueweiyabo',
+            label: '绝味鸭脖',
+            price: 8
           }
         ]
       },
       {
-        value: '烧烤',
+        value: 'shaokao',
         label: '烧烤',
         children: [
           {
-            value: '烤肉串',
-            label: '烤肉串'
+            value: 'kaorouchaun',
+            label: '烤肉串',
+            price: 5
           }
         ]
       }
     ]
   },
   {
-    value: '百货',
+    value: 'baihuo',
     label: '百货',
     children: [
       {
-        value: '打火机',
-        label: '打火机'
+        value: 'dahuoji',
+        label: '打火机',
+        price: 2
       },
       {
-        value: '纸巾',
-        label: '纸巾'
+        value: 'zhijin',
+        label: '纸巾',
+        price: 2
       },
       {
-        value: '扑克',
-        label: '扑克'
+        value: 'puke',
+        label: '扑克',
+        price: 5
       }
     ]
   },
   {
-    value: '充值',
+    value: 'chongzhi',
     label: '充值'
   }
 ]

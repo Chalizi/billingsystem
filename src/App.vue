@@ -3,51 +3,82 @@
     <div id="container">
       <h1>账单打印辅助程序</h1>
       <div class="table">
+
         <el-row>
           <el-table
             :data="tableData"
-            style="width: 100%">
+            style="width: 100%"
+          >
             <el-table-column
               prop="records"
               label="消费记录"
               width="180">
             </el-table-column>
+
             <el-table-column
               prop="num"
               label="数量"
-              width="180">
-            </el-table-column>
+              width="180"
+            ></el-table-column>
+
             <el-table-column
               prop="price"
               label="单价"
               width="180"
-            >
-            </el-table-column>
+            ></el-table-column>
+
             <el-table-column
               prop="totalprice"
-              label="金额">
-            </el-table-column>
+              label="金额"
+            ></el-table-column>
+
             <el-table-column
               fixed="right"
               label="操作"
-              width="120">
+              width="120"
+            >
+
               <template slot-scope="scope">
                 <el-button
                   @click.native.prevent="deleteRow(scope.$index, tableData)"
                   type="text"
-                  size="small">
-                  移除
-                </el-button>
+                  size="small"
+                >移除</el-button>
               </template>
+
             </el-table-column>
+
           </el-table>
         </el-row>
+
       </div>
+
+      <div class="computed">
+
+        <el-row>
+          <el-col :offset="20" :span="2">收款金额</el-col>
+          <el-col :span="2">500</el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :offset="20" :span="2">消费总额</el-col>
+          <el-col :span="2">500</el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :offset="20" :span="2">结余</el-col>
+          <el-col :span="2">500</el-col>
+        </el-row>
+
+      </div>
+
       <div class="console">
+
         <el-row>
           <el-col :span="2">
             <div>消费记录</div>
           </el-col>
+
           <el-col :span="5">
             <el-cascader
               clearable
@@ -60,9 +91,11 @@
               :props="{ expandTrigger: 'hover', emitPath: false }"
             ></el-cascader>
           </el-col>
+
           <el-col :span="2">
             <div>数量</div>
           </el-col>
+
           <el-col :span="5">
             <el-input-number
               :disabled="numDisabled"
@@ -72,9 +105,11 @@
               label="数量"
             ></el-input-number>
           </el-col>
+
           <el-col :span="2">
             <div>{{priceName}}</div>
           </el-col>
+
           <el-col :span="4">
             <el-autocomplete
               v-model="price"
@@ -83,6 +118,7 @@
               clearable
             ></el-autocomplete>
           </el-col>
+
           <el-col :span="3">
             <el-button
               type="primary"
@@ -90,8 +126,11 @@
             >添加</el-button>
           </el-col>
         </el-row>
+
       </div>
+
       <el-row>
+
         <el-col :offset="21" :span="3">
           <el-button
             @click="print"
@@ -99,6 +138,7 @@
             icon="el-icon-printer"
           ></el-button>
         </el-col>
+
       </el-row>
     </div>
   </div>
@@ -151,7 +191,8 @@ export default {
         totalprice = num * price
       }
       records = this.menus[this.records].label
-      this.tableData.push({
+      var len = this.tableData.length
+      this.tableData.splice(len - 1, 0, {
         records: records,
         num: num,
         price: price,

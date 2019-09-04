@@ -10,12 +10,12 @@ export default [
           {
             value: 'bobanaicha',
             label: '波霸奶茶',
-            price: 10
+            price: '10'
           },
           {
             value: 'jinjuningmeng',
             label: '金桔柠檬',
-            price: 10
+            price: '10'
           }
         ]
       }
@@ -32,17 +32,17 @@ export default [
           {
             value: 'doujiaoqiezi',
             label: '豆角茄子',
-            price: 12
+            price: '12'
           },
           {
             value: 'wanzaiduorou',
             label: '万载剁肉',
-            price: 15
+            price: '15'
           },
           {
             value: 'xiaochaojidan',
             label: '小炒鸡蛋',
-            price: 12
+            price: '12'
           }
         ]
       },
@@ -53,17 +53,17 @@ export default [
           {
             value: 'malachizhong',
             label: '麻辣翅中',
-            price: 11
+            price: '11'
           },
           {
             value: 'xianglapaigu',
             label: '香辣排骨',
-            price: 15
+            price: '15'
           },
           {
             value: 'jueweiyabo',
             label: '绝味鸭脖',
-            price: 8
+            price: '8'
           }
         ]
       },
@@ -74,7 +74,7 @@ export default [
           {
             value: 'kaorouchaun',
             label: '烤肉串',
-            price: 5
+            price: '5'
           }
         ]
       }
@@ -87,27 +87,29 @@ export default [
       {
         value: 'dahuoji',
         label: '打火机',
-        price: 2
+        price: '2'
       },
       {
         value: 'zhijin',
         label: '纸巾',
-        price: 2
+        price: '2'
       },
       {
         value: 'puke',
         label: '扑克',
-        price: 5
+        price: '5'
       }
     ]
   },
   {
     value: 'chongzhi',
-    label: '充值'
+    label: '充值',
+    serializable: true
   },
   {
     value: 'taoxian',
-    label: '套现'
+    label: '取现',
+    serializable: true
   }
 ]
 

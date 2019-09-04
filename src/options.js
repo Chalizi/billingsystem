@@ -75,6 +75,11 @@ export default [
             value: 'kaorouchaun',
             label: '烤肉串',
             price: '5'
+          },
+          {
+            value: 'yangrouchuan',
+            label: '羊肉串',
+            price: '10'
           }
         ]
       }

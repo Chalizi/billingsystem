@@ -30,12 +30,13 @@
             <el-table-column
               prop="totalprice"
               label="金额"
+              width="180"
             ></el-table-column>
 
             <el-table-column
               fixed="right"
               label="操作"
-              width="120"
+              width="80"
             >
 
               <template slot-scope="scope">
@@ -56,18 +57,8 @@
       <div class="computed">
 
         <el-row>
-          <el-col :offset="20" :span="2">收款金额</el-col>
-          <el-col :span="2">500</el-col>
-        </el-row>
-
-        <el-row>
-          <el-col :offset="20" :span="2">消费总额</el-col>
-          <el-col :span="2">500</el-col>
-        </el-row>
-
-        <el-row>
-          <el-col :offset="20" :span="2">结余</el-col>
-          <el-col :span="2">500</el-col>
+          <el-col :offset="13" :span="8">总金额</el-col>
+          <el-col :span="3">{{receivables}}</el-col>
         </el-row>
 
       </div>
@@ -113,13 +104,14 @@
           <el-col :span="4">
             <el-autocomplete
               v-model="price"
+              :disabled="priceDisabled"
               :fetch-suggestions="querySearch"
               placeholder="请输入金额"
               clearable
             ></el-autocomplete>
           </el-col>
 
-          <el-col :span="3">
+          <el-col  :offset="1" :span="3">
             <el-button
               type="primary"
               @click="add"
@@ -135,8 +127,7 @@
           <el-button
             @click="print"
             type="primary"
-            icon="el-icon-printer"
-          ></el-button>
+          >打印</el-button>
         </el-col>
 
       </el-row>
@@ -153,6 +144,8 @@ export default {
   data () {
     return {
       numDisabled: false,
+      priceDisabled: false,
+      receivables: 0,
       priceName: '单价',
       records: '',
       num: 1,
@@ -191,8 +184,7 @@ export default {
         totalprice = num * price
       }
       records = this.menus[this.records].label
-      var len = this.tableData.length
-      this.tableData.splice(len - 1, 0, {
+      this.tableData.push({
         records: records,
         num: num,
         price: price,
@@ -206,15 +198,17 @@ export default {
     choiceRecords (records) {
       if (!records) return
       if (this.menus[records].serializable) {
-        this.num = '-'
+        this.num = 1
         this.priceName = '金额'
         this.numDisabled = true
+        this.priceDisabled = false
       }
       if (typeof parseFloat(this.menus[records].price) === 'number' && !isNaN(parseFloat(this.menus[records].price))) {
         this.num = 1
         this.price = this.menus[records].price
         this.priceName = '单价'
         this.numDisabled = false
+        this.priceDisabled = true
       }
     },
     querySearch (queryString, cb) {
@@ -237,7 +231,8 @@ export default {
         { 'value': '200' },
         { 'value': '300' },
         { 'value': '400' },
-        { 'value': '500' }
+        { 'value': '500' },
+        { 'value': '1000' }
       ]
     },
     deleteRow (index, rows) {
@@ -246,6 +241,16 @@ export default {
   },
   mounted () {
     this.restaurants = this.loadAll()
+  },
+  watch: {
+    tableData: {
+      deep: true,
+      handler (val, oldVal) {
+        this.receivables = val.reduce((prev, cur) => {
+          return prev + cur.num * cur.price
+        }, 0)
+      }
+    }
   }
 }
 </script>
@@ -265,6 +270,10 @@ export default {
 }
 .console div {
   text-align: center;
+  line-height: 38px;
+}
+.computed {
+  height: 40px;
   line-height: 40px;
 }
 </style>
